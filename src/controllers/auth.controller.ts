@@ -39,3 +39,10 @@ export const loginHandler = async (
 
   reply.status(200).send({ token });
 };
+
+export const userLoggedHandler = async (
+  request: FastifyRequest<IAddUserRequest>,
+  reply: FastifyReply
+) => {
+  return reply.status(200).send(request.user);
+};
