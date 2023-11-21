@@ -11,9 +11,32 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String     @id @default(cuid())
   name      String
   email     String
   password  String
-  createdAt DateTime @default(now())
+  photo     String?
+  createdAt DateTime   @default(now())
+  historic  Historic[]
+}
+
+model Historic {
+  id           String   @id @default(cuid())
+  licensePlate String
+  description  String
+  status       String
+  coords       Coords[]
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Coords {
+  id         Int      @id @default(autoincrement())
+  latitude   Float
+  longitude  Float
+  timestamp  Float
+  Historic   Historic @relation(fields: [historicId], references: [id])
+  historicId String
 }

@@ -3,6 +3,7 @@ import fastify, { FastifyReply, FastifyRequest } from "fastify";
 import fastifyJwt from "@fastify/jwt";
 import { userRoutes } from "./routes/user.routes";
 import { authRoutes } from "./routes/auth.routes";
+import { historicRoutes } from "./routes/historic.routes";
 
 const app = fastify();
 
@@ -23,6 +24,7 @@ app.decorate(
 
 app.register(userRoutes, { prefix: "/api/v1/users" });
 app.register(authRoutes, { prefix: "/api/v1/auth" });
+app.register(historicRoutes, { prefix: "/api/v1/historic" });
 
 app
   .listen({
