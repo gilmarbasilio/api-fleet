@@ -24,7 +24,7 @@ app.decorate(
 
 app.register(userRoutes, { prefix: "/api/v1/users" });
 app.register(authRoutes, { prefix: "/api/v1/auth" });
-app.register(historicRoutes, { prefix: "/api/v1/historic" });
+app.register(historicRoutes, { prefix: "/api/v1/histories" });
 
 app
   .listen({
