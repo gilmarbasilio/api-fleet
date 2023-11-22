@@ -14,6 +14,7 @@ import {
   addHistoricHandler,
   checkInHistoricHandler,
   deleteHistoricHandler,
+  getCarInUseHandler,
   getHistoricHandler,
   getHistoriesHandler,
   updateHistoricHandler,
@@ -59,5 +60,11 @@ export const historicRoutes: FastifyPluginAsync = async (
     "/:id/check-in",
     { onRequest: [app.authenticate] },
     checkInHistoricHandler
+  );
+
+  app.get(
+    "/get-car-in-use",
+    { onRequest: [app.authenticate] },
+    getCarInUseHandler
   );
 };

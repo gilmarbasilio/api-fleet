@@ -246,3 +246,18 @@ export const checkInHistoricHandler = async (
 
   return reply.status(204).send();
 };
+
+export const getCarInUseHandler = async (
+  request: FastifyRequest<IGetHistoricRequest>,
+  reply: FastifyReply
+) => {
+  const user = request.user as User;
+  const historic = await prisma.historic.findFirst({
+    where: {
+      userId: user.id,
+      status: "departed",
+    },
+  });
+
+  return reply.send(historic);
+};
