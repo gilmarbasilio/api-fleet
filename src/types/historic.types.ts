@@ -11,6 +11,7 @@ export interface IGetHistoriesRequest extends RequestGenericInterface {
   Querystring: {
     skip: number;
     take: number;
+    status: string;
   };
 }
 export interface IGetHistoricRequest extends RequestGenericInterface {

@@ -12,7 +12,7 @@ import {
 } from "../types/user.types";
 import {
   addHistoricHandler,
-  checkInHistoricHandler,
+  checkOutHistoricHandler,
   deleteHistoricHandler,
   getCarInUseHandler,
   getHistoricHandler,
@@ -56,10 +56,10 @@ export const historicRoutes: FastifyPluginAsync = async (
   );
 
   // update a historic
-  app.put<IUpdateUserRequest>(
-    "/:id/check-in",
+  app.post<IUpdateUserRequest>(
+    "/check-out",
     { onRequest: [app.authenticate] },
-    checkInHistoricHandler
+    checkOutHistoricHandler
   );
 
   app.get(

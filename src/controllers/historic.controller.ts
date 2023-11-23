@@ -16,12 +16,13 @@ export const getHistoriesHandler = async (
   request: FastifyRequest<IGetHistoriesRequest>,
   reply: FastifyReply
 ) => {
-  const { skip = 0, take = 10 } = request.query;
+  const { skip = 0, take = 10, status = undefined } = request.query;
 
   const user = request.user as User;
   const users = await prisma.historic.findMany({
     where: {
       userId: user?.id,
+      status,
     },
     include: {
       coords: {
@@ -86,12 +87,15 @@ export const addHistoricHandler = async (
           timestamp: z.number(),
         })
       )
-      .min(1),
+      .min(1)
+      .optional(),
   });
 
-  const { licensePlate, description, coords } = createHistoricScrema.parse(
-    request.body
-  );
+  const {
+    licensePlate,
+    description,
+    coords = [],
+  } = createHistoricScrema.parse(request.body);
 
   const historicExists = await prisma.historic.findFirst({
     where: { licensePlate, status: "departed" },
@@ -134,9 +138,7 @@ export const updateHistoricHandler = async (
   const user = request.user as User;
 
   if (!id) {
-    return reply
-      .status(400)
-      .send(new Error("Está faltando o id do históricor"));
+    return reply.status(400).send(new Error("Está faltando o id do histórico"));
   }
 
   const updateHistoricScrema = z.object({
@@ -200,17 +202,12 @@ export const deleteHistoricHandler = async (
   return reply.status(204).send();
 };
 
-export const checkInHistoricHandler = async (
+export const checkOutHistoricHandler = async (
   request: FastifyRequest<IUpdateHistoricRequest>,
   reply: FastifyReply
 ) => {
-  const { id } = request.params;
-
-  if (!id) {
-    return reply.status(400).send(new Error("Está faltando o id do histórico"));
-  }
-
   const updateHistoricScrema = z.object({
+    id: z.string(),
     coords: z.array(
       z.object({
         latitude: z.number(),
@@ -220,7 +217,8 @@ export const checkInHistoricHandler = async (
     ),
   });
 
-  const { coords } = updateHistoricScrema.parse(request.body);
+  const { id, coords } = updateHistoricScrema.parse(request.body);
+  console.log("passou aqui", coords);
 
   const historic = await prisma.historic.update({
     data: {
@@ -240,9 +238,13 @@ export const checkInHistoricHandler = async (
     },
   });
 
+  console.log("passou aqui 2");
+
   if (!historic) {
     return reply.status(400).send(new Error("Histórico não existe"));
   }
+
+  console.log("passou aqui 3");
 
   return reply.status(204).send();
 };
