@@ -218,7 +218,6 @@ export const checkOutHistoricHandler = async (
   });
 
   const { id, coords } = updateHistoricScrema.parse(request.body);
-  console.log("passou aqui", coords);
 
   const historic = await prisma.historic.update({
     data: {
@@ -238,13 +237,9 @@ export const checkOutHistoricHandler = async (
     },
   });
 
-  console.log("passou aqui 2");
-
   if (!historic) {
     return reply.status(400).send(new Error("Histórico não existe"));
   }
-
-  console.log("passou aqui 3");
 
   return reply.status(204).send();
 };

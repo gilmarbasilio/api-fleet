@@ -8,6 +8,7 @@ import {
   IAddUserRequest,
   IDeleteUserRequest,
   IGetUserRequest,
+  IUpdatePhotoRequest,
   IUpdateUserRequest,
 } from "../types/user.types";
 import {
@@ -16,6 +17,7 @@ import {
   addUserHandler,
   updateUserHandler,
   deleteUserHandler,
+  updateUserPhotoHandler,
 } from "../controllers/user.controller";
 
 export const userRoutes: FastifyPluginAsync = async (
@@ -47,5 +49,12 @@ export const userRoutes: FastifyPluginAsync = async (
     "/:id",
     { onRequest: [app.authenticate] },
     deleteUserHandler
+  );
+
+  // update photo user
+  app.post<IUpdatePhotoRequest>(
+    "/update-photo",
+    { onRequest: [app.authenticate] },
+    updateUserPhotoHandler
   );
 };

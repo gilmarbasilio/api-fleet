@@ -4,7 +4,9 @@ import {
   IAddUserRequest,
   IDeleteUserRequest,
   IGetUserRequest,
+  IUpdatePhotoRequest,
   IUpdateUserRequest,
+  User,
 } from "../types/user.types";
 import { z } from "zod";
 import bcrypt from "bcrypt";
@@ -129,6 +131,34 @@ export const deleteUserHandler = async (
   await prisma.user.delete({
     where: { id },
   });
+
+  return reply.status(204).send();
+};
+
+export const updateUserPhotoHandler = async (
+  request: FastifyRequest<IUpdatePhotoRequest>,
+  reply: FastifyReply
+) => {
+  const userLogged = request.user as User;
+
+  const updatePhotoScrema = z.object({
+    photo: z.string(),
+  });
+
+  const { photo } = updatePhotoScrema.parse(request.body);
+
+  const user = await prisma.user.update({
+    data: {
+      photo,
+    },
+    where: {
+      id: userLogged.id,
+    },
+  });
+
+  if (!user) {
+    return reply.status(400).send(new Error("Usuário não existe"));
+  }
 
   return reply.status(204).send();
 };

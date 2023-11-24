@@ -29,3 +29,9 @@ export interface IDeleteUserRequest extends RequestGenericInterface {
     id: string;
   };
 }
+
+export interface IUpdatePhotoRequest extends RequestGenericInterface {
+  Body: {
+    photo: string;
+  };
+}
