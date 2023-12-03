@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "tsx watch --no-cache src/server.ts",
     "build": "tsup src",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "deploy": "npm install && npm run build && npx prisma migrate deploy && node dist/server.js"
   },
   "devDependencies": {
     "@types/node": "^20.9.0",
