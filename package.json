@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "@fastify/jwt": "^7.2.3",
+    "@fastify/swagger": "^8.12.1",
+    "@fastify/swagger-ui": "^1.10.2",
     "@prisma/client": "^5.5.2",
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^5.1.1",
