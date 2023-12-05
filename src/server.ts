@@ -28,11 +28,11 @@ app.register(require('@fastify/swagger'), {
     info: {
       title: 'Api Fleet Documentation',
       description: 'Api Fleet Documentation description',
-      version: '0.1.0',
+      version: '0.0.1',
     },
-    host: '127.0.0.1:3000',
-    basePath: '',
-    schemes: ['http', 'https'],
+    host: `${process.env.HOST || "localhost"}:${process.env.PORT || 3333}`,
+    basePath: '/api/v1',
+    schemes: ['http'],
     consumes: ['application/json'],
     produces: ['application/json'],
     securityDefinitions: {

@@ -41,7 +41,7 @@ export const userRoutes: FastifyPluginAsync = async (
             type: 'object',
             properties: {
               id: {
-                type: 'number',
+                type: 'string',
                 format: 'uuid'
               },
               name: {
@@ -82,7 +82,7 @@ export const userRoutes: FastifyPluginAsync = async (
           type: 'object',
           properties: {
             id: {
-              type: 'number',
+              type: 'string',
               format: 'uuid'
             },
             name: {
