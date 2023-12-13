@@ -44,5 +44,14 @@ export const userLoggedHandler = async (
   request: FastifyRequest<IAddUserRequest>,
   reply: FastifyReply
 ) => {
-  return reply.status(200).send(request.user);
+  const user = await prisma.user.findFirst({
+    where: { id: request.user?.id },
+  });
+
+  return reply.status(200).send({
+    id: user?.id,
+    name: user?.name,
+    email: user?.email,
+    photo: user?.photo
+  });
 };

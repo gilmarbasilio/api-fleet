@@ -77,6 +77,9 @@ export const authRoutes: FastifyPluginAsync = async (
               type: "string",
               format: "email",
             },
+            photo: {
+              type: "string",
+            },
           },
         },
       },
